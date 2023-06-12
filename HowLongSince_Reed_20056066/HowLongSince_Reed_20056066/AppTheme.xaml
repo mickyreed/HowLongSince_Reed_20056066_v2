@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="HowLongSince_Reed_20056066.AppTheme">
+    
+    
+    <!-- Light Theme -->
+    <Color x:Key="PrimaryColorLight">#007AFF</Color>
+    <Color x:Key="SecondaryColorLight">#FF9500</Color>
+    <Color x:Key="TextColorLight">#333333</Color>
+    <Color x:Key="AccentColorLight">#4CD964</Color>
+    <Color x:Key="BackgroundColorLight">#FFFFFF</Color>
+
+    
+    <Style TargetType="Label" x:Key="HeaderLabelStyle">
+        <Setter Property="TextColor" Value="{DynamicResource TextColorLight}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <Style TargetType="Label" x:Key="FooterLabelStyle">
+        <Setter Property="TextColor" Value="{DynamicResource TextColorLight}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <Style TargetType="Label" x:Key="TitleLabelStyle">
+        <Setter Property="TextColor" Value="{DynamicResource TextColorLight}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <Style TargetType="Label" x:Key="RegularLabelStyle">
+        <Setter Property="TextColor" Value="{DynamicResource TextColorLight}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <Style TargetType="Button" x:Key="ButtonStyleLight">
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColorLight}" />
+        <Setter Property="TextColor" Value="{DynamicResource TextColorLight}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <!-- Define styles for other items like the top dividing bar, title label, button, etc. -->
+
+    
+    
+    <!-- Dark Theme -->
+    <Color x:Key="PrimaryColorDark">#C643FC</Color>
+    <Color x:Key="SecondaryColorDark">#FF3B30</Color>
+    <Color x:Key="TextColorDark">#FFFFFF</Color>
+    <Color x:Key="AccentColorDark">#5AC8FA</Color>
+    <Color x:Key="BackgroundColorDark">#1C1C1E</Color>
+
+    
+    
+    <Style TargetType="Label" x:Key="HeaderLabelStyleDark">
+        <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <Style TargetType="Label" x:Key="FooterLabelStyleDark">
+        <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <Style TargetType="Label" x:Key="TitleLabelStyleDark">
+        <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <Style TargetType="Label" x:Key="RegularLabelStyleDark">
+        <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <Style TargetType="Button" x:Key="ButtonStyleDark">
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColorDark}" />
+        <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+        <!-- Add more setters for other properties as needed -->
+    </Style>
+
+    <!-- Define styles for other items in the dark theme -->
+
+    
+    
+    <!-- Set the merged dictionaries -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="HeaderLabelStyle">
+                <Setter Property="TextColor" Value="{DynamicResource TextColorLight}" />
+            </Style>
+            <Style TargetType="Label" x:Key="FooterLabelStyle">
+                <Setter Property="TextColor" Value="{DynamicResource TextColorLight}" />
+            </Style>
+            <Style TargetType="Label" x:Key="TitleLabelStyleDark">
+                <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+            </Style>
+            <Style TargetType="Label" x:Key="RegularLabelStyleDark">
+                <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+            </Style>
+            <Style TargetType="Button" x:Key="ButtonStyleDark">
+                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColorDark}" />
+                <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+            </Style>
+            <!-- Define styles for other items in the light theme -->
+        </ResourceDictionary>
+        <ResourceDictionary>
+            <Style TargetType="Label" x:Key="HeaderLabelStyle">
+                <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+            </Style>
+            <Style TargetType="Label" x:Key="FooterLabelStyle">
+                <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+            </Style>
+            <Style TargetType="Label" x:Key="TitleLabelStyleDark">
+                <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+            </Style>
+
+            <Style TargetType="Label" x:Key="RegularLabelStyleDark">
+                <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+            </Style>
+
+            <Style TargetType="Button" x:Key="ButtonStyleDark">
+                <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColorDark}" />
+                <Setter Property="TextColor" Value="{DynamicResource TextColorDark}" />
+            </Style>
+            <!-- Define styles for other items in the dark theme -->
+        </ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

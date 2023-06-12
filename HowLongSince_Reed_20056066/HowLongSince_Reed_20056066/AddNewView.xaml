@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HowLongSince_Reed_20056066.AddNewView">
+    
+
+    <StackLayout BackgroundColor="{DynamicResource DisplayBackground}">
+        <Frame BackgroundColor="Transparent" Padding="24" CornerRadius="0" >
+
+            <!-- *** HEADER ***-->
+            <Label TextColor="{DynamicResource HeaderText}" Text="How Long Since?" FontSize="Small" Padding="1" Margin="10,20,10,2" HorizontalTextAlignment="Start" 
+            VerticalTextAlignment="End" FontAttributes="Bold"  />
+        </Frame>
+
+        <BoxView BackgroundColor="{DynamicResource HeaderText}" HeightRequest="1" />
+        <BoxView BackgroundColor="{DynamicResource MainBackground}" HeightRequest="20" />
+
+        <Label TextColor="{DynamicResource BlackText}"  Text="Add New Item" FontSize="{DynamicResource HeaderFontSize}" HorizontalOptions="Center" Margin="0,20,0,10" WidthRequest="300" HorizontalTextAlignment="Center" />
+        <Entry Placeholder="Enter item name" x:Name="ItemEntry" HorizontalOptions="Center" Margin="0,20,0,10" FontSize="{DynamicResource FontSize}" WidthRequest="300"
+            />
+        <Button BackgroundColor="{DynamicResource Button}" TextColor="{DynamicResource BlackText}" BorderColor="{DynamicResource ButtonBorder}" FontSize="{DynamicResource FontSize}" Text="Start Timer" Clicked="StartTimerButton_Clicked" HorizontalOptions="Center" Margin="0,20,0,10" WidthRequest="300"/>
+        <Button BackgroundColor="{DynamicResource Button}" TextColor="{DynamicResource BlackText}" BorderColor="{DynamicResource ButtonBorder}" FontSize="{DynamicResource FontSize}" Text="Back to Main" Clicked="BackToMainButton_Clicked" HorizontalOptions="Center" Margin="0,20,0,10" WidthRequest="300"/>
+
+           
+        <!--BoxView BackgroundColor="Transparent" HeightRequest="60" />
+
+        <Image Source="assets/Keyboard_default.png"
+                        WidthRequest="300"
+                        HeightRequest="250"/-->
+
+
+        <!-- *** FOOTER ***-->
+        <Frame Margin="5,20,5,5" Padding="2" CornerRadius="10" FlexLayout.AlignSelf="End" HeightRequest="16" VerticalOptions="FillAndExpand">
+            <Label TextColor="{DynamicResource HeaderText}" Text="By Michael Reed" VerticalOptions="End" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="8"/>
+        </Frame>
+    </StackLayout>
+
+</ContentPage>
