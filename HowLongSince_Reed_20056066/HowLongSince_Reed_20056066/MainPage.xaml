@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HowLongSince_Reed_20056066.MainPage">
-
+    <!-- *** OUTER BORDER *** -->
+    <Frame BackgroundColor="{DynamicResource MainBackground}" BorderColor="{DynamicResource OuterBorder}" Padding="0" Margin="0">
         <StackLayout BackgroundColor="{DynamicResource DisplayBackground}">
         <Frame BackgroundColor="Transparent" Padding="24" CornerRadius="0" >
         
@@ -33,8 +34,8 @@
                             <!-- *** ListView Event and Timer ***-->
                             <StackLayout HorizontalOptions="StartAndExpand" Spacing="0">
 
-                                <Label TextColor="{DynamicResource BlackText}" Text="{Binding EventName}" FontSize="{DynamicResource FontSize}" FontAttributes="Bold" Margin="20,10,20,0" />
-                                <Label TextColor="{DynamicResource BlackText}" Text="{Binding TimeSinceStart}" FontSize="{DynamicResource FontSize}" Margin="20,0,20,10" MinimumWidthRequest="200"/>
+                                    <Label TextColor="{DynamicResource BlackText}" Text="{Binding EventName}" FontSize="{DynamicResource FontSize}" BackgroundColor="{DynamicResource DisplayBackground}" FontAttributes="Bold" Margin="20,10,20,0" />
+                                        <Label TextColor="{DynamicResource BlackText}" Text="{Binding TimeSinceStart}" FontSize="{DynamicResource FontSize}" BackgroundColor="{DynamicResource DisplayBackground}" Margin="20,0,20,10" MinimumWidthRequest="200"/>
 
                             </StackLayout>
                             <!-- *** Restart and Delete ListView BUTTONS ***-->
@@ -88,5 +89,5 @@
             <Label TextColor="{DynamicResource HeaderText}" Text="By Michael Reed" VerticalOptions="End" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="8"/>
         </Frame>
     </StackLayout>
-
+    </Frame>
 </ContentPage>

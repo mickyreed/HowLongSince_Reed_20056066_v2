@@ -3,65 +3,78 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="HowLongSince_Reed_20056066.DetailsView">
 
-    <ContentPage.Content>
-        <StackLayout BackgroundColor="{DynamicResource DisplayBackground}">
-            
-            <!-- *** HEADER ***-->
-            <Label Style="{DynamicResource LabelText}"  Text="How Long Since?" FontSize="Small" Padding="1" Margin="10,20,10,2" HorizontalTextAlignment="Start" VerticalTextAlignment="End" TextColor="#2196F3" FontAttributes="Bold"  />
 
-            <BoxView BackgroundColor="Black" HeightRequest="1" />
-            <StackLayout>
+        <!-- *** OUTER BORDER *** -->
+        <Frame BackgroundColor="{DynamicResource MainBackground}" BorderColor="{DynamicResource OuterBorder}" Padding="0" Margin="0">
+            
+            <StackLayout BackgroundColor="{DynamicResource DisplayBackground}">
+
+                <Frame BackgroundColor="Transparent" Padding="24" CornerRadius="0" >
+
+                    <!-- *** HEADER ***-->
+                    <Label TextColor="{DynamicResource HeaderText}" Text="How Long Since?" FontSize="Small" Padding="1" Margin="10,20,10,2" HorizontalTextAlignment="Start" 
+                    VerticalTextAlignment="End" FontAttributes="Bold"  />
+                </Frame>
+
+                <BoxView BackgroundColor="{DynamicResource HeaderText}" HeightRequest="1" />
+                <BoxView BackgroundColor="{DynamicResource MainBackground}" HeightRequest="20" />
+
+                <Label TextColor="{DynamicResource BlackText}" FontSize="{DynamicResource HeaderFontSize}" Text="Events" Margin="0,10,0,10" HorizontalTextAlignment="Center" />
+
+
+                <StackLayout>
                 <Label Style="{DynamicResource LabelText}"  Text="{Binding EventName}" HorizontalOptions="Center" />
                 <Label Style="{DynamicResource LabelText}"  Text="{Binding SelectedItem.TimeSinceStart}" FontSize="20" HorizontalOptions="Center" Margin="0,20,0,10" />
                 <BoxView BackgroundColor="Transparent" WidthRequest="20" />
 
-            </StackLayout>
+                </StackLayout>
 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Label Style="{DynamicResource LabelText}"  Text="Reset Timer" HorizontalTextAlignment="End" VerticalOptions="Center" WidthRequest="100"/>
-            <BoxView BackgroundColor="Transparent" WidthRequest="20" />
-                <ImageButton Source="assets/Restart_blk.png"
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Style="{DynamicResource LabelText}"  Text="Reset Timer" HorizontalTextAlignment="End" VerticalOptions="Center" WidthRequest="100"/>
+                    <BoxView BackgroundColor="Transparent" WidthRequest="20" />
+                    <ImageButton Source="assets/Restart_blk.png"
                          HorizontalOptions="Center"   
                          WidthRequest="60"
                          HeightRequest="60"
                          CornerRadius="15"
                          BackgroundColor="Cyan"
                          Clicked="ResetTimeButton_Clicked"/>
-            </StackLayout>
+                </StackLayout>
 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Label Style="{DynamicResource LabelText}"  Text="Stop Timer" HorizontalTextAlignment="End" VerticalOptions="Center" WidthRequest="100"/>
-            <BoxView BackgroundColor="Transparent" WidthRequest="20" />
-                <ImageButton Source="assets/Stop_blk.png"
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Style="{DynamicResource LabelText}"  Text="Stop Timer" HorizontalTextAlignment="End" VerticalOptions="Center" WidthRequest="100"/>
+                    <BoxView BackgroundColor="Transparent" WidthRequest="20" />
+                    <ImageButton Source="assets/Stop_blk.png"
                          HorizontalOptions="Center"
                          WidthRequest="60"
                          HeightRequest="60"
                          CornerRadius="15"
                          Clicked="StopTimerButton_Clicked"/>
-            </StackLayout>
+                 </StackLayout>
 
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
-                <Label Style="{DynamicResource LabelText}"  Text="Delete" HorizontalTextAlignment="End" VerticalOptions="Center" WidthRequest="100"/>
-            <BoxView BackgroundColor="Transparent" WidthRequest="20" />
-                <ImageButton Source="assets/Delete_blk.png"
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Label Style="{DynamicResource LabelText}"  Text="Delete" HorizontalTextAlignment="End" VerticalOptions="Center" WidthRequest="100"/>
+                <BoxView BackgroundColor="Transparent" WidthRequest="20" />
+                    <ImageButton Source="assets/Delete_blk.png"
                          HorizontalOptions="Center"
                          WidthRequest="60"
                          HeightRequest="60"
                          CornerRadius="15"
                          Clicked="DeleteButton_Clicked"/>
+                </StackLayout>
+
+
+                <BoxView BackgroundColor="Transparent" HeightRequest="60" />
+
+                <Button Style="{DynamicResource LabelText}{DynamicResource Buttons}" Text="Back to Main" Clicked="BackToMainButton_Clicked" HorizontalOptions="Center" Margin="0,20,0,0" />
+
+                <!-- *** FOOTER ***-->
+
+                <Frame Margin="5" Padding="2" CornerRadius="10" FlexLayout.AlignSelf="End" HeightRequest="16" VerticalOptions="FillAndExpand">
+                    <Label Style="{DynamicResource LabelText}" Text="By Michael Reed" VerticalOptions="End" HorizontalTextAlignment="Center" TextColor="#2196F3" FontAttributes="Bold" FontSize="8"/>
+                </Frame>
+
             </StackLayout>
+        </Frame>
 
-
-            <BoxView BackgroundColor="Transparent" HeightRequest="60" />
-
-            <Button Style="{DynamicResource LabelText}{DynamicResource Buttons}" Text="Back to Main" Clicked="BackToMainButton_Clicked" HorizontalOptions="Center" Margin="0,20,0,0" />
-
-            <!-- *** FOOTER ***-->
-
-            <Frame Margin="5" Padding="2" CornerRadius="10" FlexLayout.AlignSelf="End" HeightRequest="16" VerticalOptions="FillAndExpand">
-                <Label Style="{DynamicResource LabelText}" Text="By Michael Reed" VerticalOptions="End" HorizontalTextAlignment="Center" TextColor="#2196F3" FontAttributes="Bold" FontSize="8"/>
-            </Frame>
-
-        </StackLayout>
-    </ContentPage.Content>
 </ContentPage>

@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HowLongSince_Reed_20056066.AddNewView">
-    
+    <!-- *** OUTER BORDER *** -->
+    <Frame BackgroundColor="{DynamicResource MainBackground}" BorderColor="{DynamicResource OuterBorder}" Padding="0" Margin="0">
 
-    <StackLayout BackgroundColor="{DynamicResource DisplayBackground}">
+        <StackLayout BackgroundColor="{DynamicResource DisplayBackground}">
         <Frame BackgroundColor="Transparent" Padding="24" CornerRadius="0" >
 
             <!-- *** HEADER ***-->
@@ -34,5 +35,6 @@
             <Label TextColor="{DynamicResource HeaderText}" Text="By Michael Reed" VerticalOptions="End" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="8"/>
         </Frame>
     </StackLayout>
+    </Frame>
 
 </ContentPage>

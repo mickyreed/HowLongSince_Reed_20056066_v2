@@ -38,9 +38,6 @@ namespace HowLongSince_Reed_20056066
             // Load data from file or create default data
             loadData();
 
-            //set the eventList as the ListView source
-            //ItemsListView.ItemsSource = eventList;
-
             //Check Preferences and load active screen
             CheckActiveScreen();
 
@@ -58,27 +55,27 @@ namespace HowLongSince_Reed_20056066
 
         protected override void OnAppearing()
         {
-            App.Current.Properties["activeScreen"] = 0;
+            
+            //Application.Current.Properties["activeScreen"] = 0;
 
 
             base.OnAppearing();
             var myTheme = Preferences.Get("IsDarkMode", true);
             var myCustom = Preferences.Get("IsCustom", true);
-            //var myFontSize = Preferences.Get("FontSize", );
-            
-            if (!App.Current.Resources.ContainsKey("FontSize"))
+
+            if (Preferences.ContainsKey("FontSize"))
             {
-                App.Current.Resources["FontSize"] = "Default";
-                Debug.WriteLine(App.Current.Resources["FontSize"]);
+                //string savedFontSize = Preferences.Get("FontSize", "Default");
+                //FontPicker.SelectedItem = savedFontSize;
+                string savedFontSize = (string)Application.Current.Properties["FontSize"];
+                Debug.WriteLine($"Font Size Check is {savedFontSize}");
+                CheckFontSize(savedFontSize);
             }
             else
             {
-                var FontSize = App.Current.Resources["FontSize"];
-                App.Current.Resources["FontSize"] = FontSize;
-                Debug.WriteLine(App.Current.Resources["FontSize"]);
+                //FontPicker.SelectedItem = "Default";
+                CheckFontSize("Default");
             }
-           
-
 
             if (myTheme && !myCustom)
             {
@@ -104,39 +101,68 @@ namespace HowLongSince_Reed_20056066
         private void SetThemeLight()
         {
             //OUTER FRAME COLOURS
-            App.Current.Resources["MainBackground"] = "#ebf1f5";
+            App.Current.Resources["MainBackground"] = "#ebf1f5"; //ghost white /grey tinge
             App.Current.Resources["OuterBorder"] = "Black";
 
             //HEADER COLOURS
-            App.Current.Resources["HeaderText"] = "#2196F3";
+            App.Current.Resources["HeaderText"] = "#2196F3"; //lt blue
 
             //DISPLAYS
-            App.Current.Resources["DisplayBackground"] = "#ffffff";
+            App.Current.Resources["DisplayBackground"] = "#ffffff"; //wht subtle
             App.Current.Resources["DisplayBorder"] = "Black";
             App.Current.Resources["BlackText"] = "Black";
             App.Current.Resources["Buttons"] = "White";
-            App.Current.Resources["ButtonBorder"] = "#769cbc";
-            App.Current.Resources["LabelText"] = "#2196F3";
+            App.Current.Resources["ButtonBorder"] = "#769cbc"; //med blue
+
+            App.Current.Resources["TipFrameLabelText"] = "#2196F3";
+            App.Current.Resources["SliderBackground"] = "#ffffff";
+            App.Current.Resources["SliderColour"] = "#2196F3";
+            App.Current.Resources["TipLabelText"] = "#2196F3";
+            App.Current.Resources["PercentageLabelText"] = "#2196F3";
+            App.Current.Resources["SplitCostLabelText"] = "#2196F3";
+
+            App.Current.Resources["StepperBackground"] = "White";
+            App.Current.Resources["StepperColour"] = "#2196F3";
+
+            App.Current.Resources["PayeeNumberLabelText"] = "#2196F3";
+
+            App.Current.Resources["PayeeTitleLabelText"] = "#2196F3";
+
+            App.Current.Resources["TotalSplitAmountLabelText"] = "#2196F3";
+
+            App.Current.Resources["PayeeEachLabelText"] = "#2196F3";
 
         }
-
         private void SetThemeDark()
         {
             //OUTER FRAME COLOURS
-            App.Current.Resources["MainBackground"] = "#333";
-            App.Current.Resources["OuterBorder"] = "#2196F3";
+            App.Current.Resources["MainBackground"] = "#333"; //dk grey
+            App.Current.Resources["OuterBorder"] = "#2196F3"; //lt blue
 
             //HEADER COLOURS
-            App.Current.Resources["HeaderText"] = "#2196F9";
+            App.Current.Resources["HeaderText"] = "#2196F9"; //lt blue
 
             //DISPLAYS
-            App.Current.Resources["DisplayBackground"] = "#4A4A4A";
-            App.Current.Resources["DisplayBorder"] = "#2196F3";
-            App.Current.Resources["BlackText"] = "White";
-            App.Current.Resources["Buttons"] = "#222222";
+            App.Current.Resources["DisplayBackground"] = "#4A4A4A"; // med grey
+            App.Current.Resources["DisplayBorder"] = "#2196F3"; //lt blue
+            App.Current.Resources["BlackText"] = "White"; //white
+            App.Current.Resources["Buttons"] = "#222222"; //vry dk grey
             App.Current.Resources["ButtonBorder"] = "#769cbc";
-            App.Current.Resources["LabelText"] = "White";
- 
+
+            App.Current.Resources["TipFrameLabelText"] = "#2196F3"; //Lte blue
+            App.Current.Resources["SliderBackground"] = "#769cbc"; //med blue
+            App.Current.Resources["SliderColour"] = "White";
+            App.Current.Resources["TipLabelText"] = "White";
+            App.Current.Resources["PercentageLabelText"] = "White";
+            App.Current.Resources["SplitCostLabelText"] = "White";
+
+            App.Current.Resources["StepperBackground"] = "#769cbc"; //med blue
+            App.Current.Resources["StepperColour"] = "White";
+            App.Current.Resources["PayeeNumberLabelText"] = "White";
+            App.Current.Resources["PayeeTitleLabelText"] = "White";
+            App.Current.Resources["TotalSplitAmountLabelText"] = "White";
+            App.Current.Resources["PayeeEachLabelText"] = "White";
+
         }
 
         private void SetThemeCustom()
@@ -164,10 +190,17 @@ namespace HowLongSince_Reed_20056066
                 App.Current.Resources["HeaderText"] = headerTextHex;
             }
 
+            //Text COLOURS
+            if (Application.Current.Properties.ContainsKey("CustomBlackText"))
+            {
+                String headerTextHex = Application.Current.Properties["CustomBlackText"].ToString();
+                App.Current.Resources["BlackText"] = headerTextHex;
+            }
+
             //DISPLAYS
             //App.Current.Resources["DisplayBackground"] = "#ffffff";
             App.Current.Resources["DisplayBorder"] = "Black";
-            App.Current.Resources["BlackText"] = "Black";
+            //App.Current.Resources["BlackText"] = "Black";
             App.Current.Resources["Buttons"] = "White";
             App.Current.Resources["ButtonBorder"] = "#769cbc";
 
@@ -389,13 +422,9 @@ namespace HowLongSince_Reed_20056066
 
         private void PlaySound()
         {
-            //if (App.Current.Properties.ContainsKey("IsMuted") && (bool)App.Current.Properties["IsMuted"])
-            //{
-            //    SoundEffects.PlayTap();
-            //}
 
             var mySound = Preferences.Get("IsMuted", false);
-            if (!mySound)
+            if (mySound)
             //if (soundOn)
             {
                 SoundEffects.PlayTap();
@@ -403,6 +432,67 @@ namespace HowLongSince_Reed_20056066
             else
             {
                 return;
+            }
+        }
+
+        public void CheckFontSize(string FontSize)
+        {
+            if (FontSize != null)
+            {
+                //< x:Double x:Key = "LargeFontSize" > 24 </ x:Double >
+                //< x:Double x:Key = "MediumFontSize" > 18 </ x:Double >
+                //< x:Double x:Key = "SmallFontSize" > 14 </ x:Double >
+                //< x:Double x:Key = "DefaultFontSize" > 16 </ x:Double >
+
+                if (FontSize == "Default")
+                {
+                    //Resources["FontSize"] = Resources["DefaultFontSize"];
+                    Resources["FontSize"] = 16;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
+                    Resources["HeaderFontSize"] = 24;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
+                }
+                else if (FontSize == "Small")
+                {
+                    // Resources["FontSize"] = Resources["SmallFontSize"];
+                    Resources["FontSize"] = 12;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
+                    Resources["HeaderFontSize"] = 20;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    //App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
+                }
+                else if (FontSize == "Medium")
+                {
+                    //Resources["FontSize"] = Resources["MediumFontSize"];
+                    Resources["FontSize"] = 20;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
+                    Resources["HeaderFontSize"] = 28;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
+                }
+                else if (FontSize == "Large")
+                {
+                    //Resources["FontSize"] = Resources["LargeFontSize"];
+                    Resources["FontSize"] = 22;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
+                    Resources["HeaderFontSize"] = 30;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
+                }
+                else
+                {
+                    Resources["FontSize"] = 16;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
+                    Resources["HeaderFontSize"] = 24;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
+                }
             }
         }
 

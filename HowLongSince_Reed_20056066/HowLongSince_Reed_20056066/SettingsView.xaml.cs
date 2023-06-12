@@ -37,13 +37,30 @@ namespace HowLongSince_Reed_20056066
         {
             App.Current.Properties["activeScreen"] = 2;
 
-
             //reload the slider value
             RSlider.Value = RedRGBValue;
             GSlider.Value = GreenRGBValue;
             BSlider.Value = BlueRGBValue;
+            //RSlider.Value = Convert.ToDouble(RedRGBValue);
+            //GSlider.Value = Convert.ToDouble(GreenRGBValue);
+            //BSlider.Value = Convert.ToDouble(BlueRGBValue);
 
             base.OnAppearing();
+
+            if (Preferences.ContainsKey("FontSize"))
+            {
+                //string savedFontSize = Preferences.Get("FontSize", "Default");
+                //FontPicker.SelectedItem = savedFontSize;
+                string savedFontSize = (string)Application.Current.Properties["FontSize"];
+                Debug.WriteLine($"Font Size Check is {savedFontSize}");
+                CheckFontSize(savedFontSize);
+            }
+            else
+            {
+                FontPicker.SelectedItem = "Default";
+                CheckFontSize("Default");
+            }
+
             var myTheme = Preferences.Get("IsDarkMode", true);
             var myCustom = Preferences.Get("IsCustom", true);
             Debug.WriteLine("MyTheme: " + myTheme);
@@ -91,6 +108,21 @@ namespace HowLongSince_Reed_20056066
 
 
                 }
+
+                //Text COLOURS
+                if (Application.Current.Properties.ContainsKey("CustomBlackText"))
+                {
+                    String headerTextHex = Application.Current.Properties["CustomBlackText"].ToString();
+                    App.Current.Resources["BlackText"] = headerTextHex;
+                }
+
+
+                //Text COLOURS App.Current.Properties["CustomTipFrameLabelText"] = "#2196F3";
+                if (Application.Current.Properties.ContainsKey("CustomTipFrameLabelText"))
+                {
+                    String headerTextHex = Application.Current.Properties["CustomTipFrameLabelText"].ToString();
+                    App.Current.Resources["TipFrameLabelText"] = headerTextHex;
+                }
             }
 
         }
@@ -112,24 +144,22 @@ namespace HowLongSince_Reed_20056066
         private async void BackToMainButton_Clicked(object sender, EventArgs e)
         {
             PlaySound();
-            Application.Current.Properties["activeScreen"] = 0;
+            App.Current.Properties["activeScreen"] = 0;
             await Navigation.PopModalAsync();
         }
-
         private void UpdateAppTheme()
         {
             if (IsDarkTheme)
             {
-               App.Current.Resources["BackgroundColor"] = Color.Black;
-               App.Current.Resources["TextColor"] = Color.White;
+               //App.Current.Resources["BackgroundColor"] = Color.Black;
+               //App.Current.Resources["TextColor"] = Color.White;
             }
             else
             {
-                App.Current.Resources["BackgroundColor"] = Color.White;
-                App.Current.Resources["TextColor"] = Color.Black;
+                //App.Current.Resources["BackgroundColor"] = Color.White;
+                //App.Current.Resources["TextColor"] = Color.Black;
             }
         }
-
         public bool IsDarkMode
         {
             get => Preferences.Get(nameof(IsDarkMode), false);
@@ -142,7 +172,6 @@ namespace HowLongSince_Reed_20056066
                 Debug.WriteLine(" theme " + nameof(IsDarkMode), value.ToString());
             }
         }
-
         public bool IsMuted
         {
             get => Preferences.Get(nameof(IsMuted), false);
@@ -154,7 +183,6 @@ namespace HowLongSince_Reed_20056066
                 Debug.WriteLine(" volume " + nameof(IsMuted), value.ToString());
             }
         }
-
         public bool IsCustom
         {
             get => Preferences.Get(nameof(IsCustom), false);
@@ -169,7 +197,6 @@ namespace HowLongSince_Reed_20056066
                 Debug.WriteLine(" Custom Colour " + nameof(IsCustom), value.ToString());
             }
         }
-
         public double RedRGBValue
         {
             get => Preferences.Get(nameof(RedRGBValue), 0d);
@@ -182,7 +209,6 @@ namespace HowLongSince_Reed_20056066
                 Debug.WriteLine(" Custom Colour " + nameof(RedRGBValue), value.ToString());
             }
         }
-
         public double GreenRGBValue
         {
             get => Preferences.Get(nameof(GreenRGBValue), 0d);
@@ -196,7 +222,6 @@ namespace HowLongSince_Reed_20056066
                 Debug.WriteLine(" Custom Colour " + nameof(GreenRGBValue), value.ToString());
             }
         }
-
         public double BlueRGBValue
         {
             get => Preferences.Get(nameof(BlueRGBValue), 0d);
@@ -209,7 +234,6 @@ namespace HowLongSince_Reed_20056066
                 Debug.WriteLine(" Custom Colour " + nameof(BlueRGBValue), value.ToString());
             }
         }
-
         private void PlaySound()
         {
             //if (App.Current.Properties.ContainsKey("IsMuted") && (bool)App.Current.Properties["IsMuted"])
@@ -218,7 +242,7 @@ namespace HowLongSince_Reed_20056066
             //}
 
             var mySound = Preferences.Get("IsMuted", false);
-            if (!mySound)
+            if (mySound)
             //if (soundOn)
             {
                 SoundEffects.PlayTap();
@@ -228,12 +252,10 @@ namespace HowLongSince_Reed_20056066
                 return;
             }
         }
-
         private void ToggleSound_Toggled(object sender, ToggledEventArgs e)
         {
             PlaySound();
         }
-
         private void ToggleTheme_Toggled(object sender, ToggledEventArgs e)
         {
             PlaySound();
@@ -246,54 +268,21 @@ namespace HowLongSince_Reed_20056066
                 SetThemeLight();
             }
         }
-
         private void SetThemeLight()
         {
             //OUTER FRAME COLOURS
-            App.Current.Resources["MainBackground"] = "#ebf1f5";
+            App.Current.Resources["MainBackground"] = "#ebf1f5"; //ghost white /grey tinge
             App.Current.Resources["OuterBorder"] = "Black";
 
             //HEADER COLOURS
-            App.Current.Resources["HeaderText"] = "#2196F3";
+            App.Current.Resources["HeaderText"] = "#2196F3"; //lt blue
 
             //DISPLAYS
-            App.Current.Resources["DisplayBackground"] = "#ffffff";
+            App.Current.Resources["DisplayBackground"] = "#ffffff"; //wht subtle
             App.Current.Resources["DisplayBorder"] = "Black";
             App.Current.Resources["BlackText"] = "Black";
             App.Current.Resources["Buttons"] = "White";
-            App.Current.Resources["ButtonBorder"] = "#769cbc";
-            App.Current.Resources["LabelText"] = "#2196F3";
-
-        }
-
-        private void SetThemeDark()
-        {
-            //OUTER FRAME COLOURS
-            App.Current.Resources["MainBackground"] = "#333";
-            App.Current.Resources["OuterBorder"] = "#2196F3";
-
-            //HEADER COLOURS
-            App.Current.Resources["HeaderText"] = "#2196F9";
-
-            //DISPLAYS
-            App.Current.Resources["DisplayBackground"] = "#4A4A4A";
-            App.Current.Resources["DisplayBorder"] = "#2196F3";
-            App.Current.Resources["BlackText"] = "White";
-            App.Current.Resources["Buttons"] = "#222222";
-            App.Current.Resources["ButtonBorder"] = "#769cbc";
-            App.Current.Resources["LabelText"] = "White";
-
-        }
-
-        private void SetThemeCustom()
-        {
-            //DISPLAYS
-            //App.Current.Resources["MainBackground"] = "#ebf1f5";
-            //App.Current.Resources["DisplayBackground"] = "#ffffff";
-            App.Current.Resources["DisplayBorder"] = "Black";
-            App.Current.Resources["BlackText"] = "Black";
-            App.Current.Resources["Buttons"] = "White";
-            App.Current.Resources["ButtonBorder"] = "#769cbc";
+            App.Current.Resources["ButtonBorder"] = "#769cbc"; //med blue
 
             App.Current.Resources["TipFrameLabelText"] = "#2196F3";
             App.Current.Resources["SliderBackground"] = "#ffffff";
@@ -312,7 +301,118 @@ namespace HowLongSince_Reed_20056066
             App.Current.Resources["TotalSplitAmountLabelText"] = "#2196F3";
 
             App.Current.Resources["PayeeEachLabelText"] = "#2196F3";
+
         }
+        private void SetThemeDark()
+        {
+            //OUTER FRAME COLOURS
+            App.Current.Resources["MainBackground"] = "#333"; //dk grey
+            App.Current.Resources["OuterBorder"] = "#2196F3"; //lt blue
+
+            //HEADER COLOURS
+            App.Current.Resources["HeaderText"] = "#2196F9"; //lt blue
+
+            //DISPLAYS
+            App.Current.Resources["DisplayBackground"] = "#4A4A4A"; // med grey
+            App.Current.Resources["DisplayBorder"] = "#2196F3"; //lt blue
+            App.Current.Resources["BlackText"] = "White"; //white
+            App.Current.Resources["Buttons"] = "#222222"; //vry dk grey
+            App.Current.Resources["ButtonBorder"] = "#769cbc";
+
+            App.Current.Resources["TipFrameLabelText"] = "#2196F3"; //Lte blue
+            App.Current.Resources["SliderBackground"] = "#769cbc"; //med blue
+            App.Current.Resources["SliderColour"] = "White";
+            App.Current.Resources["TipLabelText"] = "White";
+            App.Current.Resources["PercentageLabelText"] = "White";
+            App.Current.Resources["SplitCostLabelText"] = "White";
+
+            App.Current.Resources["StepperBackground"] = "#769cbc"; //med blue
+            App.Current.Resources["StepperColour"] = "White";
+            App.Current.Resources["PayeeNumberLabelText"] = "White";
+            App.Current.Resources["PayeeTitleLabelText"] = "White";
+            App.Current.Resources["TotalSplitAmountLabelText"] = "White";
+            App.Current.Resources["PayeeEachLabelText"] = "White";
+
+        }
+        private void SetThemeCustom()
+        {
+            //OUTER FRAME COLOURS
+            //if (Application.Current.Properties.ContainsKey("MainBackground"))
+            //{
+            //    String mainBackgroundHex = App.Current.Properties["MainBackground"].ToString();
+            //    Debug.WriteLine(mainBackgroundHex + "MAIN BACKGROUND");
+            //    App.Current.Resources["MainBackground"] = mainBackgroundHex;//"#" + hex;
+            //    App.Current.Resources["OuterBorder"] = "BLACK";
+            //}
+
+            if (Application.Current.Properties.ContainsKey("DisplayBackground"))
+            {
+                String displayBackgroundHex = Application.Current.Properties["CustomMainBackground"].ToString();
+                App.Current.Resources["DisplayBackground"] = displayBackgroundHex;
+                Debug.WriteLine(displayBackgroundHex);
+            }
+
+            //HEADER COLOURS
+            if (Application.Current.Properties.ContainsKey("CustomHeaderText"))
+            {
+                String headerTextHex = Application.Current.Properties["CustomHeaderText"].ToString();
+                App.Current.Resources["HeaderText"] = headerTextHex;
+            }
+
+            //DISPLAYS
+            //App.Current.Resources["DisplayBackground"] = "#ffffff";
+            App.Current.Resources["DisplayBorder"] = "Black";
+            //App.Current.Resources["BlackText"] = "Black";
+            App.Current.Resources["Buttons"] = "White";
+            App.Current.Resources["ButtonBorder"] = "#769cbc";
+
+            //App.Current.Resources["TipFrameLabelText"] = "#2196F3";
+            App.Current.Resources["SliderBackground"] = "#ffffff";
+            App.Current.Resources["SliderColour"] = "#2196F3";
+            App.Current.Resources["TipLabelText"] = "#2196F3";
+            App.Current.Resources["PercentageLabelText"] = "#2196F3";
+            App.Current.Resources["SplitCostLabelText"] = "#2196F3";
+
+            App.Current.Resources["StepperBackground"] = "White";
+            App.Current.Resources["StepperColour"] = "#2196F3";
+
+            App.Current.Resources["PayeeNumberLabelText"] = "#2196F3";
+
+            App.Current.Resources["PayeeTitleLabelText"] = "#2196F3";
+
+            App.Current.Resources["TotalSplitAmountLabelText"] = "#2196F3";
+
+            App.Current.Resources["PayeeEachLabelText"] = "#2196F3";
+
+
+            ////DISPLAYS
+            //App.Current.Resources["DisplayBackground"] = "#ffffff";
+            //App.Current.Resources["DisplayBorder"] = "Black";
+            ////App.Current.Resources["MainBackground"] = "#ebf1f5";
+            ////App.Current.Resources["DisplayBackground"] = "#ffffff";
+            //App.Current.Resources["BlackText"] = "Black";
+            //App.Current.Resources["Buttons"] = "White";
+            //App.Current.Resources["ButtonBorder"] = "#769cbc";
+
+            //App.Current.Resources["TipFrameLabelText"] = "#2196F3";
+            //App.Current.Resources["SliderBackground"] = "#ffffff";
+            //App.Current.Resources["SliderColour"] = "#2196F3";
+            //App.Current.Resources["TipLabelText"] = "#2196F3";
+            //App.Current.Resources["PercentageLabelText"] = "#2196F3";
+            //App.Current.Resources["SplitCostLabelText"] = "#2196F3";
+
+            //App.Current.Resources["StepperBackground"] = "White";
+            //App.Current.Resources["StepperColour"] = "#2196F3";
+
+            //App.Current.Resources["PayeeNumberLabelText"] = "#2196F3";
+
+            //App.Current.Resources["PayeeTitleLabelText"] = "#2196F3";
+
+            //App.Current.Resources["TotalSplitAmountLabelText"] = "#2196F3";
+
+            //App.Current.Resources["PayeeEachLabelText"] = "#2196F3";
+        }
+
 
         private void RSlider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
@@ -323,7 +423,6 @@ namespace HowLongSince_Reed_20056066
             ChangeValueRGB();
 
         }
-
         private void GSlider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
             double value = Math.Round(e.NewValue, 0);
@@ -332,7 +431,6 @@ namespace HowLongSince_Reed_20056066
             Debug.WriteLine("Green RGB Value Changed to: " + value);
             ChangeValueRGB();
         }
-
         private void BSlider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
             double value = Math.Round(e.NewValue, 0);
@@ -341,7 +439,6 @@ namespace HowLongSince_Reed_20056066
             Debug.WriteLine("Blue RGB Value Changed to: " + value);
             ChangeValueRGB();
         }
-
         private void ChangeValueRGB()
         {
 
@@ -351,9 +448,9 @@ namespace HowLongSince_Reed_20056066
             App.Current.Properties["MainBackground"] = "#" + hex;
             Preferences.Set("CustomMainBackground", "#" + hex);
 
-            App.Current.Resources["DisplayBackground"] = "#" + hex;
-            App.Current.Properties["DisplayBackground"] = "#" + hex;
-            Preferences.Set("CustomDisplayBackground", "#" + hex);
+            App.Current.Resources["DisplayBackground"] = "#" + hex; //
+            App.Current.Properties["DisplayBackground"] = "#" + hex; //
+            Preferences.Set("CustomDisplayBackground", "#" + hex); //
 
             App.Current.Resources["OuterBorder"] = "BLACK";
             App.Current.Properties["OuterBorder"] = "BLACK";
@@ -362,16 +459,23 @@ namespace HowLongSince_Reed_20056066
             //Set current 
             App.Current.Properties["CustomMainBackground"] = "#" + hex;
             App.Current.Properties["CustomOuterBorder"] = "BLACK";
-            App.Current.Properties["CustomDisplayBackground"] = "#" + hex;
+            App.Current.Properties["CustomDisplayBackground"] = "#" + hex; //
 
             //HEADER COLOURS
             // check if RGB values of background adjust with header text and adjust
-            if (RedRGBValue < 70 && BlueRGBValue < 70 && GreenRGBValue < 70)
+            if (RedRGBValue < 90 && BlueRGBValue < 90 && GreenRGBValue < 90)
             {
-                App.Current.Resources["HeaderText"] = "#2196F9";
+                App.Current.Resources["HeaderText"] = "#2196F9"; // blue
                 Preferences.Set("CustomHeaderText", "#2196F9");
-
                 App.Current.Properties["CustomHeaderText"] = "#2196F9";
+                
+                App.Current.Resources["BlackText"] = "#2196F9"; // blue
+                Preferences.Set("CustomBlackText", "#2196F9");
+                App.Current.Properties["CustomBlackText"] = "#2196F9";
+
+                App.Current.Resources["TipFrameLabelText"] = "#2196F3";
+                Preferences.Set("CustomTipFrameLabelText", "#2196F3");
+                App.Current.Properties["CustomTipFrameLabelText"] = "#2196F3";
             }
 
             else if (RedRGBValue > 200 && BlueRGBValue < 200 && GreenRGBValue < 200)
@@ -393,31 +497,17 @@ namespace HowLongSince_Reed_20056066
                 App.Current.Properties["CustomHeaderText"] = "BLACK";
             }
             //DISPLAYS
-            App.Current.Resources["DisplayBackground"] = "#ffffff";
-            App.Current.Resources["DisplayBorder"] = "Black";
-            App.Current.Resources["BlackText"] = "Black";
-            App.Current.Resources["Buttons"] = "White";
-            App.Current.Resources["ButtonBorder"] = "#769cbc";
+            //App.Current.Resources["DisplayBackground"] = "#ffffff";
+            //App.Current.Resources["DisplayBorder"] = "Black";
+            //App.Current.Resources["BlackText"] = "Black";
+            //App.Current.Resources["Buttons"] = "White";
+            //App.Current.Resources["ButtonBorder"] = "#769cbc";
 
-            App.Current.Resources["TipFrameLabelText"] = "#2196F3";
-            App.Current.Resources["SliderBackground"] = "#ffffff";
-            App.Current.Resources["SliderColour"] = "#2196F3";
-            App.Current.Resources["TipLabelText"] = "#2196F3";
-            App.Current.Resources["PercentageLabelText"] = "#2196F3";
-            App.Current.Resources["SplitCostLabelText"] = "#2196F3";
+            //App.Current.Resources["TipFrameLabelText"] = "#2196F3";
+            //App.Current.Resources["SliderBackground"] = "#ffffff";
+            //App.Current.Resources["SliderColour"] = "#2196F3";
 
-            App.Current.Resources["StepperBackground"] = "White";
-            App.Current.Resources["StepperColour"] = "#2196F3";
-
-            App.Current.Resources["PayeeNumberLabelText"] = "#2196F3";
-
-            App.Current.Resources["PayeeTitleLabelText"] = "#2196F3";
-
-            App.Current.Resources["TotalSplitAmountLabelText"] = "#2196F3";
-
-            App.Current.Resources["PayeeEachLabelText"] = "#2196F3";
         }
-
         private void ToggleCustom_Toggled(object sender, ToggledEventArgs e)
         {
             PlaySound();
@@ -438,7 +528,11 @@ namespace HowLongSince_Reed_20056066
                 BSlider.IsEnabled = false;
                 Debug.WriteLine(" theme " + nameof(IsCustom).ToString());
 
-                if (IsDarkMode)
+                //if (IsDarkMode && IsCustom)
+                //{
+                //    return;
+                //}
+                if (IsDarkMode )
                 {
                     SetThemeDark();
                 }
@@ -449,20 +543,24 @@ namespace HowLongSince_Reed_20056066
             }
 
         }
-
         private void FontPicker_SelectedIndexChanged(object sender, EventArgs e)
         {
             Xamarin.Forms.Picker FontPicker = (Xamarin.Forms.Picker)sender;
+
             if (FontPicker.SelectedItem != null)
             {
                 FontSize = FontPicker.SelectedItem.ToString();
                 Preferences.Set("FontSize", FontSize);
-                App.Current.Resources["FontSize"] = FontSize;
-                App.Current.Properties["FontSize"] = FontSize;
 
-                int SelectedIndex = FontPicker.SelectedIndex;
+                //int SelectedIndex = FontPicker.SelectedIndex;
+
+                //CheckFontSize(FontSize);
+
+                //App.Current.Resources["FontSize"] = (double)App.Current.Resources[selectedFontSize];
+                //App.Current.Resources["HeaderFontSize"] = (double)App.Current.Resources[$"{selectedFontSize}Header"];
 
                 CheckFontSize(FontSize);
+
 
             }
         }
@@ -471,34 +569,60 @@ namespace HowLongSince_Reed_20056066
         {
             if (FontSize != null)
             {
+                    //< x:Double x:Key = "LargeFontSize" > 24 </ x:Double >
+                    //< x:Double x:Key = "MediumFontSize" > 18 </ x:Double >
+                    //< x:Double x:Key = "SmallFontSize" > 14 </ x:Double >
+                    //< x:Double x:Key = "DefaultFontSize" > 16 </ x:Double >
+
                 if (FontSize == "Default")
                 {
                     //Resources["FontSize"] = Resources["DefaultFontSize"];
                     Resources["FontSize"] = 16;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
                     Resources["HeaderFontSize"] = 24;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
                 }
                 else if (FontSize == "Small")
                 {
-                    //Resources["FontSize"] = Resources["SmallFontSize"];
+                   // Resources["FontSize"] = Resources["SmallFontSize"];
                     Resources["FontSize"] = 12;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
                     Resources["HeaderFontSize"] = 20;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    //App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
                 }
                 else if (FontSize == "Medium")
                 {
                     //Resources["FontSize"] = Resources["MediumFontSize"];
                     Resources["FontSize"] = 20;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
                     Resources["HeaderFontSize"] = 28;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
                 }
                 else if (FontSize == "Large")
                 {
                     //Resources["FontSize"] = Resources["LargeFontSize"];
                     Resources["FontSize"] = 22;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
                     Resources["HeaderFontSize"] = 30;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
                 }
-            }
-            else
-            {
-                Resources["FontSize"] = 16;
+                else
+                {
+                    Resources["FontSize"] = 16;
+                    App.Current.Resources["FontSize"] = FontSize;
+                    App.Current.Properties["FontSize"] = FontSize;
+                    Resources["HeaderFontSize"] = 24;
+                    App.Current.Resources["HeaderFontSize"] = "Header" + FontSize;
+                    App.Current.Properties["HeaderFontSize"] = "Header" + FontSize;
+                }
             }
         }
 
